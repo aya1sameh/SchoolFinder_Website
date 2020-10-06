@@ -14,20 +14,45 @@
 
         <v-form ref="form">
         <v-row justify="center" class="mb-5">
-          <v-col offset="1" cols="3" sm="4" md="2" id="avatar">
+          <v-col offset="1" cols="3" sm="4" md="2" v-show="!UserImage" >
             <v-img
+              id="avatar"
               src="../assets/SignupAvatar.png"
-              max-height="100"
-              max-width="100"
+              max-height="100%"
+              max-width="100%"
             >
             </v-img>
           </v-col>
-          <v-col cols="1" sm="1" md="1">
+          <v-col cols="1" sm="1" md="1" v-show="!UserImage">
             <br />
             <br />
             <br />
             <v-file-input
+              @change="previewImage"
               hide-input
+              v-model="UserImage"
+              accept="image/*"
+              prepend-icon="mdi-camera-plus"
+              color="#009688"
+            ></v-file-input>
+          </v-col>
+          <v-col
+            offset="1"
+            cols="3"
+            sm="4"
+            md="2"
+            v-show="UserImage"
+          >
+          <v-img id="avatar" class='preview' rounded :src="url"></v-img>
+          </v-col>
+          <v-col cols="1" sm="1" md="1" v-show="UserImage">
+            <br />
+            <br />
+            <br />
+            <v-file-input
+              @change="previewImage"
+              hide-input
+              v-model="UserImage"
               accept="image/*"
               color="#009688"
               prepend-icon="mdi-camera-plus"
@@ -200,6 +225,7 @@ export default {
       show1: false,
       show2: false,
       role: 0,
+      UserImage: '',
       Name: '',
       Email: '',
       password: '',
@@ -238,6 +264,9 @@ export default {
         this.$router.push('/login');
       }
     },
+    previewImage() {
+      this.url = URL.createObjectURL(this.UserImage);
+    },
   },
 };
 </script>
@@ -266,5 +295,10 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+.preview {
+    background-color:  #eeeeee;
+    max-width: 100%;
+    max-height: 100%;
 }
 </style>>
