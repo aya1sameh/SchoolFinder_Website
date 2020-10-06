@@ -8,7 +8,7 @@
             class="text-h2 text-center font-weight-bold"
             id="signup"
           >
-            Sign Up
+          <p class="font-italic">Sign Up</p>
           </v-col>
         </v-row>
 
@@ -114,6 +114,7 @@
               prepend-inner-icon="mdi-map-marker"
               color="#009688"
               outlined
+              hint="Street-City"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -121,7 +122,7 @@
         <v-row justify="center" no-gutters>
           <v-col cols="12" sm="6" md="5" id="signup">
             <h2>
-            Role
+            Register as
             </h2>
             <v-radio-group
               v-model="role"
@@ -161,7 +162,13 @@
         <br />
         <v-row justify="center" no-gutters>
           <v-col cols="24" sm="18" md="15">
-            <v-btn @click="Validate" rounded dark color="#009688" x-large style="width: 250px">
+            <v-btn
+              @click="Validate"
+              rounded
+              dark
+              color="#009688"
+              x-large
+              style="width: 250px">
               Register
             </v-btn>
           </v-col>
@@ -228,7 +235,7 @@ export default {
     },
     Validate() {
       if (this.$refs.form.validate()) {
-        this.$router.push('/');
+        this.$router.push('/login');
       }
     },
   },
