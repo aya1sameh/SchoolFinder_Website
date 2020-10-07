@@ -99,7 +99,7 @@ export default {
             email: this.Email,
           },
         });
-        // this.$router.push('/login');
+        this.$router.push('/login');
       }
     },
   },
