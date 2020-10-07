@@ -14,16 +14,18 @@
 
         <v-form ref="form">
         <v-row justify="center" class="mb-5">
-          <v-col offset="1" cols="3" sm="4" md="2" v-show="!UserImage" >
+          <v-col offset="1" cols="3" sm="4" md="2">
             <v-img
               id="avatar"
-              src="../assets/SignupAvatar.png"
+              class='preview'
+              rounded
+              :src="url"
               max-height="100%"
               max-width="100%"
             >
             </v-img>
           </v-col>
-          <v-col cols="1" sm="1" md="1" v-show="!UserImage">
+          <v-col cols="1" sm="1" md="1">
             <br />
             <br />
             <br />
@@ -34,32 +36,10 @@
               accept="image/*"
               prepend-icon="mdi-camera-plus"
               color="#009688"
-            ></v-file-input>
-          </v-col>
-          <v-col
-            offset="1"
-            cols="3"
-            sm="4"
-            md="2"
-            v-show="UserImage"
-          >
-          <v-img id="avatar" class='preview' rounded :src="url"></v-img>
-          </v-col>
-          <v-col cols="1" sm="1" md="1" v-show="UserImage">
-            <br />
-            <br />
-            <br />
-            <v-file-input
-              @change="previewImage"
-              hide-input
-              v-model="UserImage"
-              accept="image/*"
-              color="#009688"
-              prepend-icon="mdi-camera-plus"
             ></v-file-input>
           </v-col>
         </v-row>
-
+<div>{{UserImage}}</div>
         <v-row justify="center" no-gutters>
           <v-col cols="12" sm="6" md="5">
             <v-text-field
@@ -150,18 +130,18 @@
             Register as
             </h2>
             <v-radio-group
-              v-model="role"
+              v-model="Role"
               row
               :rules="[rules.required]"
             >
               <v-radio
                 label="School finder"
-                value="1"
+                value="school_finder_client"
                 color="#009688"
               ></v-radio>
               <v-radio
                 label="School Admin"
-                value="2"
+                value="school_admin"
                 color="#009688"
               ></v-radio>
             </v-radio-group>
@@ -172,8 +152,8 @@
           <v-col cols="12" sm="6" md="5">
             <v-select
               v-model="SchoolSelected"
-              v-show="role == 2"
-              :items="items"
+              v-show="Role == 'school_admin'"
+              :items="[items]"
               label="Select A School"
               color="#009688"
               dense
@@ -219,13 +199,16 @@
 </template>
 
 <script>
+import axios from 'axios';
+import SignupAvatar from '../assets/SignupAvatar.png';
+
 export default {
   data() {
     return {
       show1: false,
       show2: false,
-      role: 0,
-      UserImage: '',
+      Role: '',
+      UserImage: new Image(),
       Name: '',
       Email: '',
       password: '',
@@ -233,7 +216,10 @@ export default {
       PhoneNumber: '',
       Location: '',
       SchoolSelected: '',
-      items: ['school_1', 'school_2', 'school_3', 'school_4'],
+      url: SignupAvatar,
+      items: [{
+        schools: () => this.getschoolsNames(),
+      }],
       rules: {
         required: (value) => !!value || 'Required.',
         email: (value) => {
@@ -261,12 +247,37 @@ export default {
     },
     Validate() {
       if (this.$refs.form.validate()) {
-        this.$router.push('/login');
+        axios({
+          method: 'post',
+          url: 'http://127.0.0.1:8000/api/register',
+          headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' },
+          data: {
+            name: this.Name,
+            password: this.password,
+            password_confirmation: this.Confirmpassword,
+            email: this.Email,
+            role: this.Role,
+            avatar: this.UserImage,
+            phone_no: this.PhoneNumber,
+            address: this.Location,
+          },
+        });
+        // this.$router.push('/login');
       }
     },
     previewImage() {
       this.url = URL.createObjectURL(this.UserImage);
     },
+    getschoolsNames() {
+      const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } };
+      axios.get('http://127.0.0.1:8000/api/schools', option)
+        .then((response) => {
+          this.items = response.data;
+        });
+    },
+  },
+  created() {
+    this.getschoolsNames();
   },
 };
 </script>

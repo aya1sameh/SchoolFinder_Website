@@ -128,6 +128,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -149,7 +151,19 @@ export default {
   methods: {
     Validate() {
       if (this.$refs.form.validate()) {
-        this.$router.push('/');
+        axios({
+          method: 'post',
+          url: 'http://127.0.0.1:8000/api/login',
+          headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' },
+          data: {
+            /* if (Name.includes('@')) {
+             email: this.Name,
+            } */
+            name: this.Name,
+            password: this.password,
+          },
+        });
+        // this.$router.push('/');
       }
     },
     NameOrEmailcheck(value) {
