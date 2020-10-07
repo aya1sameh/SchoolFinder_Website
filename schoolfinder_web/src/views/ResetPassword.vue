@@ -76,6 +76,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -93,7 +95,16 @@ export default {
   methods: {
     Validate() {
       if (this.$refs.form.validate()) {
-        this.$router.push('/login');
+        axios({
+          method: 'post',
+          url: 'http://127.0.0.1:8000/api/password/reset',
+          headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' },
+          data: {
+            password: this.password,
+            password_confirmation: this.Confirmpassword,
+          },
+        });
+        // this.$router.push('/login');
       }
     },
     IsMatching(Confirmpassword, password) {
