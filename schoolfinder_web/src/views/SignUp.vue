@@ -41,6 +41,18 @@
         </v-row>
         <v-row justify="center" no-gutters>
           <v-col cols="12" sm="6" md="5">
+             <v-alert
+              v-show="this.ExistingUseralert"
+              border="left"
+              color="#009688"
+              dark
+            >
+            This Email is already taken try to login with
+            </v-alert>
+          </v-col>
+        </v-row>
+        <v-row justify="center" no-gutters>
+          <v-col cols="12" sm="6" md="5">
             <v-text-field
               v-model="Name"
               label="Name"
@@ -104,7 +116,7 @@
               label="Phone Number"
               prepend-inner-icon="mdi-phone"
               color="#009688"
-              :rules="[rules.number]"
+              :rules="[rules.number, rules.required]"
               outlined
             ></v-text-field>
           </v-col>
@@ -114,11 +126,12 @@
           <v-col cols="12" sm="6" md="5">
             <v-text-field
               v-model="Location"
-              label="Location"
+              label="Address"
               prepend-inner-icon="mdi-map-marker"
               color="#009688"
               outlined
               hint="Street-City"
+              :rules="[rules.required]"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -206,6 +219,7 @@ export default {
     return {
       show1: false,
       show2: false,
+      ExistingUseralert: false,
       Role: '',
       UserImage: new Image(),
       Name: '',
@@ -260,8 +274,13 @@ export default {
             phone_no: this.PhoneNumber,
             address: this.Location,
           },
-        });
-        // this.$router.push('/login');
+        })
+          .then(() => {
+            // this.$router.push('/login');
+          })
+          .catch(() => {
+            this.ExistingUseralert = true;
+          });
       }
     },
     previewImage() {
