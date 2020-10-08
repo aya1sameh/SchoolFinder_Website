@@ -167,53 +167,28 @@ export default {
   methods: {
     Validate() {
       if (this.$refs.form.validate()) {
-        if (this.Name.includes('@')) {
-          axios.post('http://127.0.0.1:8000/api/login', { email: this.Name, password: this.password }, { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
-            .then(() => {
-              this.verifyalert = false;
+        axios.post('http://127.0.0.1:8000/api/login', { name: this.Name, password: this.password }, { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
+          .then(() => {
+            this.verifyalert = false;
+            this.NotRegisteredalert = false;
+            this.WrongNameOrPassAlert = false;
+            this.$router.push('/');
+          })
+          .catch((error) => {
+            if (error.response.status === 401) {
+              this.verifyalert = true;
               this.NotRegisteredalert = false;
               this.WrongNameOrPassAlert = false;
-              this.$router.push('/');
-            })
-            .catch((error) => {
-              if (error.response.status === 401) {
-                this.verifyalert = true;
-                this.NotRegisteredalert = false;
-                this.WrongNameOrPassAlert = false;
-              } else if (error.response.status === 402) {
-                this.verifyalert = false;
-                this.NotRegisteredalert = false;
-                this.WrongNameOrPassAlert = true;
-              } else {
-                this.verifyalert = false;
-                this.NotRegisteredalert = true;
-                this.WrongNameOrPassAlert = false;
-              }
-            });
-        } else {
-          axios.post('http://127.0.0.1:8000/api/login', { name: this.Name, password: this.password }, { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
-            .then(() => {
+            } else if (error.response.status === 402) {
               this.verifyalert = false;
               this.NotRegisteredalert = false;
+              this.WrongNameOrPassAlert = true;
+            } else {
+              this.verifyalert = false;
+              this.NotRegisteredalert = true;
               this.WrongNameOrPassAlert = false;
-              this.$router.push('/');
-            })
-            .catch((error) => {
-              if (error.response.status === 401) {
-                this.verifyalert = true;
-                this.NotRegisteredalert = false;
-                this.WrongNameOrPassAlert = false;
-              } else if (error.response.status === 402) {
-                this.verifyalert = false;
-                this.NotRegisteredalert = false;
-                this.WrongNameOrPassAlert = true;
-              } else {
-                this.verifyalert = false;
-                this.NotRegisteredalert = true;
-                this.WrongNameOrPassAlert = false;
-              }
-            });
-        }
+            }
+          });
       }
     },
     NameOrEmailcheck(value) {
