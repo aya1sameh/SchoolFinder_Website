@@ -23,7 +23,18 @@
             </v-img>
           </v-col>
         </v-row>
-
+        <v-row justify="center" no-gutters>
+          <v-col cols="12" sm="6" md="5">
+             <v-alert
+              v-show="this.PassChangedalert"
+              border="left"
+              color="#009688"
+              dark
+            >
+            Password successfuly changed please go to the login page
+            </v-alert>
+          </v-col>
+        </v-row>
           <v-row justify="center" no-gutters>
           <v-col cols="12" sm="6" md="5">
             <v-text-field
@@ -70,6 +81,21 @@
             </v-btn>
           </v-col>
         </v-row>
+        <br />
+        <v-row justify="center" no-gutters>
+          <v-col cols="24" sm="18" md="15">
+            <v-btn
+              to="/login"
+              rounded
+              outlined
+              color="#009688"
+              large
+              style="width: 200px"
+            >
+              Login
+            </v-btn>
+          </v-col>
+        </v-row>
       </v-container>
     </v-content>
   </v-app>
@@ -83,6 +109,7 @@ export default {
     return {
       show1: false,
       show2: false,
+      PassChangedalert: false,
       password: '',
       Confirmpassword: '',
       rules: {
@@ -102,9 +129,13 @@ export default {
           data: {
             password: this.password,
             password_confirmation: this.Confirmpassword,
+            email: this.$route.query.email,
+            token: this.$route.query.token,
           },
-        });
-        // this.$router.push('/login');
+        })
+          .then(() => {
+            this.PassChangedalert = true;
+          });
       }
     },
     IsMatching(Confirmpassword, password) {

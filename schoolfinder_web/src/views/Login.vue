@@ -47,6 +47,18 @@
             </v-alert>
           </v-col>
         </v-row>
+        <v-row justify="center" no-gutters>
+          <v-col cols="12" sm="6" md="5">
+             <v-alert
+              v-show="this.WrongNameOrPassAlert"
+              border="left"
+              color="#009688"
+              dark
+            >
+            wrong Name/Email or password
+            </v-alert>
+          </v-col>
+        </v-row>
 
         <v-row justify="center" no-gutters>
           <v-col cols="12" sm="6" md="5">
@@ -139,6 +151,7 @@ export default {
       password: '',
       verifyalert: false,
       NotRegisteredalert: false,
+      WrongNameOrPassAlert: false,
       rules: {
         required: (value) => !!value || 'Required.',
         email: (value) => {
@@ -158,25 +171,46 @@ export default {
           axios.post('http://127.0.0.1:8000/api/login', { email: this.Name, password: this.password }, { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
             .then(() => {
               this.verifyalert = false;
-              this.$router.push('/');
-            })
-            .catch(() => {
-              this.verifyalert = true;
-            });
-        } else {
-          axios.post('http://127.0.0.1:8000/api/login', { name: this.Name, password: this.password }, { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
-            .then(() => {
-              this.verifyalert = false;
               this.NotRegisteredalert = false;
+              this.WrongNameOrPassAlert = false;
               this.$router.push('/');
             })
             .catch((error) => {
               if (error.response.status === 401) {
                 this.verifyalert = true;
                 this.NotRegisteredalert = false;
+                this.WrongNameOrPassAlert = false;
+              } else if (error.response.status === 402) {
+                this.verifyalert = false;
+                this.NotRegisteredalert = false;
+                this.WrongNameOrPassAlert = true;
               } else {
                 this.verifyalert = false;
                 this.NotRegisteredalert = true;
+                this.WrongNameOrPassAlert = false;
+              }
+            });
+        } else {
+          axios.post('http://127.0.0.1:8000/api/login', { name: this.Name, password: this.password }, { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
+            .then(() => {
+              this.verifyalert = false;
+              this.NotRegisteredalert = false;
+              this.WrongNameOrPassAlert = false;
+              this.$router.push('/');
+            })
+            .catch((error) => {
+              if (error.response.status === 401) {
+                this.verifyalert = true;
+                this.NotRegisteredalert = false;
+                this.WrongNameOrPassAlert = false;
+              } else if (error.response.status === 402) {
+                this.verifyalert = false;
+                this.NotRegisteredalert = false;
+                this.WrongNameOrPassAlert = true;
+              } else {
+                this.verifyalert = false;
+                this.NotRegisteredalert = true;
+                this.WrongNameOrPassAlert = false;
               }
             });
         }
