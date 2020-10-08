@@ -39,7 +39,6 @@
             ></v-file-input>
           </v-col>
         </v-row>
-<div>{{UserImage}}</div>
         <v-row justify="center" no-gutters>
           <v-col cols="12" sm="6" md="5">
             <v-text-field
@@ -257,7 +256,7 @@ export default {
             password_confirmation: this.Confirmpassword,
             email: this.Email,
             role: this.Role,
-            avatar: this.UserImage,
+            // avatar: this.UserImage,
             phone_no: this.PhoneNumber,
             address: this.Location,
           },

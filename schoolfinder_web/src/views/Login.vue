@@ -26,6 +26,7 @@
         <v-row justify="center" no-gutters>
           <v-col cols="12" sm="6" md="5">
              <v-alert
+              v-show="this.verifyalert"
               border="left"
               color="#009688"
               dark
@@ -34,15 +35,15 @@
             </v-alert>
           </v-col>
         </v-row>
-
         <v-row justify="center" no-gutters>
           <v-col cols="12" sm="6" md="5">
              <v-alert
+              v-show="this.NotRegisteredalert"
               border="left"
               color="#009688"
               dark
             >
-            Please check your mail for creating the new password
+            You're not registered, Please Register at first
             </v-alert>
           </v-col>
         </v-row>
@@ -136,6 +137,8 @@ export default {
       show1: false,
       Name: '',
       password: '',
+      verifyalert: false,
+      NotRegisteredalert: false,
       rules: {
         required: (value) => !!value || 'Required.',
         email: (value) => {
@@ -151,19 +154,32 @@ export default {
   methods: {
     Validate() {
       if (this.$refs.form.validate()) {
-        axios({
-          method: 'post',
-          url: 'http://127.0.0.1:8000/api/login',
-          headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' },
-          data: {
-            /* if (Name.includes('@')) {
-             email: this.Name,
-            } */
-            name: this.Name,
-            password: this.password,
-          },
-        });
-        // this.$router.push('/');
+        if (this.Name.includes('@')) {
+          axios.post('http://127.0.0.1:8000/api/login', { email: this.Name, password: this.password }, { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
+            .then(() => {
+              this.verifyalert = false;
+              this.$router.push('/');
+            })
+            .catch(() => {
+              this.verifyalert = true;
+            });
+        } else {
+          axios.post('http://127.0.0.1:8000/api/login', { name: this.Name, password: this.password }, { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
+            .then(() => {
+              this.verifyalert = false;
+              this.NotRegisteredalert = false;
+              this.$router.push('/');
+            })
+            .catch((error) => {
+              if (error.response.status === 401) {
+                this.verifyalert = true;
+                this.NotRegisteredalert = false;
+              } else {
+                this.verifyalert = false;
+                this.NotRegisteredalert = true;
+              }
+            });
+        }
       }
     },
     NameOrEmailcheck(value) {

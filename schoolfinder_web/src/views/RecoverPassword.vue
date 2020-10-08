@@ -23,7 +23,30 @@
             </v-img>
           </v-col>
         </v-row>
-
+        <v-row justify="center" no-gutters>
+          <v-col cols="12" sm="6" md="5">
+             <v-alert
+             v-show="this.resetpasswordalert"
+              border="left"
+              color="#009688"
+              dark
+            >
+            Please check your mail for creating the new password
+            </v-alert>
+          </v-col>
+        </v-row>
+        <v-row justify="center" no-gutters>
+          <v-col cols="12" sm="6" md="5">
+             <v-alert
+             v-show="this.Emailerroralert"
+              border="left"
+              color="#009688"
+              dark
+            >
+            Incorrect Email
+            </v-alert>
+          </v-col>
+        </v-row>
           <v-row justify="center" no-gutters>
             <v-col cols="12" sm="6" md="5">
               <v-text-field
@@ -79,6 +102,8 @@ export default {
     return {
       show1: false,
       Email: '',
+      resetpasswordalert: false,
+      Emailerroralert: false,
       rules: {
         required: (value) => !!value || 'Required.',
         email: (value) => {
@@ -98,8 +123,15 @@ export default {
           data: {
             email: this.Email,
           },
-        });
-        this.$router.push('/login');
+        })
+          .then(() => {
+            this.resetpasswordalert = true;
+            this.Emailerroralert = false;
+          })
+          .catch(() => {
+            this.resetpasswordalert = false;
+            this.Emailerroralert = true;
+          });
       }
     },
   },
