@@ -31,7 +31,7 @@
             <v-file-input
               @change="previewImage"
               hide-input
-              v-model="UserImage"
+              v-model="file"
               accept="image/*"
               prepend-icon="mdi-camera-plus"
               color="#009688"
@@ -129,7 +129,7 @@ export default {
     return {
       ExistingUseralert: false,
       url: SignupAvatar,
-      UserImage: '',
+      file: '',
       Name: '',
       Email: '',
       PhoneNumber: '',
@@ -144,19 +144,23 @@ export default {
   methods: {
     Validate() {
       if (this.$refs.form.validate()) {
-        const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', Authorization: `${'Bearer'} ${this.$store.state.usertoken}` } };
+        // const formData = new FormData();
+        // formData.append('image', this.file, this.file.name);
+        // console.log(formData);
+        const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', 'Content-Type': 'multipart/form-data', Authorization: `${'Bearer'} ${this.$store.state.usertoken}` } };
         axios.post('http://127.0.0.1:8000/api/user', {
           name: this.Name,
           phone_no: this.PhoneNumber,
           address: this.Location,
-          avatar: this.url,
+          // avatar: this.file,
+          // formData,
         }, option)
           .then((response) => {
             this.Name = response.data.name;
             this.Email = response.data.email;
             this.PhoneNumber = response.data.phone_no;
             this.Location = response.data.address;
-            this.UserImage = response.data.avatar;
+            // this.file = response.data.avatar;
             this.ExistingUseralert = false;
           })
           .catch(() => {
@@ -165,7 +169,7 @@ export default {
       }
     },
     previewImage() {
-      this.url = URL.createObjectURL(this.UserImage);
+      this.url = URL.createObjectURL(this.file);
     },
     IsaNumber(value) {
       const phoneno = /^\d{11}$/;
@@ -175,14 +179,14 @@ export default {
       return false;
     },
     getUserInfo() {
-      const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', Authorization: `${'Bearer'} ${this.$store.state.usertoken}` } };
+      const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', Authorization: `${'Bearer'} ${localStorage.getItem('usertoken')}` } };
       axios.get('http://127.0.0.1:8000/api/user/profile', option)
         .then((response) => {
           this.Name = response.data.name;
           this.Email = response.data.email;
           this.PhoneNumber = response.data.phone_no;
           this.Location = response.data.address;
-          this.UserImage = response.data.avatar;
+          // this.file = response.data.avatar;
         });
     },
   },

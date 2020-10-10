@@ -173,7 +173,9 @@ export default {
             this.NotRegisteredalert = false;
             this.WrongNameOrPassAlert = false;
             this.$store.state.usertoken = response.data.access_token;
-            this.$router.push('/user_profile'); // to be updated after testing to '/'
+            localStorage.setItem('usertoken', response.data.access_token);
+            this.$router.push('/'); // to be updated after testing to '/'
+            this.$store.mutations.login();
           })
           .catch((error) => {
             if (error.response.status === 401) {
