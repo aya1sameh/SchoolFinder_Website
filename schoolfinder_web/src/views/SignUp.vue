@@ -159,22 +159,6 @@
             </v-radio-group>
           </v-col>
         </v-row>
-
-        <v-row justify="center" no-gutters>
-          <v-col cols="12" sm="6" md="5">
-            <v-select
-              v-model="SchoolSelected"
-              v-show="Role == 'school_admin'"
-              :items="[items]"
-              label="Select A School"
-              color="#009688"
-              dense
-              outlined
-            >
-            </v-select>
-          </v-col>
-        </v-row>
-
         </v-form>
         <br />
         <v-row justify="center" no-gutters>
@@ -230,9 +214,6 @@ export default {
       Location: '',
       SchoolSelected: '',
       url: SignupAvatar,
-      items: [{
-        schools: () => this.getschoolsNames(),
-      }],
       rules: {
         required: (value) => !!value || 'Required.',
         email: (value) => {

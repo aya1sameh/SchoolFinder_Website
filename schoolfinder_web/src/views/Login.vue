@@ -168,11 +168,12 @@ export default {
     Validate() {
       if (this.$refs.form.validate()) {
         axios.post('http://127.0.0.1:8000/api/login', { name: this.Name, password: this.password }, { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
-          .then(() => {
+          .then((response) => {
             this.verifyalert = false;
             this.NotRegisteredalert = false;
             this.WrongNameOrPassAlert = false;
-            this.$router.push('/');
+            this.$store.state.usertoken = response.data.access_token;
+            this.$router.push('/user_profile'); // to be updated after testing to '/'
           })
           .catch((error) => {
             if (error.response.status === 401) {
