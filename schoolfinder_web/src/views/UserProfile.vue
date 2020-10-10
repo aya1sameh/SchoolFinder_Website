@@ -38,6 +38,18 @@
             ></v-file-input>
           </v-col>
         </v-row>
+        <v-row justify="center" no-gutters>
+          <v-col cols="12" sm="6" md="5">
+             <v-alert
+              v-show="this.ExistingUseralert"
+              border="left"
+              color="#009688"
+              dark
+            >
+            This Username is already taken try another one
+            </v-alert>
+          </v-col>
+        </v-row>
             <v-row justify="center" no-gutters>
             <v-col cols="12" sm="6" md="5">
                 <v-text-field
@@ -115,8 +127,9 @@ import SignupAvatar from '../assets/SignupAvatar.png';
 export default {
   data() {
     return {
+      ExistingUseralert: false,
       url: SignupAvatar,
-      UserImage: new Image(),
+      UserImage: '',
       Name: '',
       Email: '',
       PhoneNumber: '',
@@ -131,11 +144,23 @@ export default {
   methods: {
     Validate() {
       if (this.$refs.form.validate()) {
-        // update request for user profile info
         const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', Authorization: `${'Bearer'} ${this.$store.state.usertoken}` } };
-        axios.post('http://127.0.0.1:8000/api/user', option, { data: { name: this.Name, phone_no: this.PhoneNumber, address: this.Location } })
-          .then(() => {
-            // console.log(response);
+        axios.post('http://127.0.0.1:8000/api/user', {
+          name: this.Name,
+          phone_no: this.PhoneNumber,
+          address: this.Location,
+          avatar: this.url,
+        }, option)
+          .then((response) => {
+            this.Name = response.data.name;
+            this.Email = response.data.email;
+            this.PhoneNumber = response.data.phone_no;
+            this.Location = response.data.address;
+            this.UserImage = response.data.avatar;
+            this.ExistingUseralert = false;
+          })
+          .catch(() => {
+            this.ExistingUseralert = true;
           });
       }
     },
@@ -157,7 +182,7 @@ export default {
           this.Email = response.data.email;
           this.PhoneNumber = response.data.phone_no;
           this.Location = response.data.address;
-          // this.UserImage = response.data[4];
+          this.UserImage = response.data.avatar;
         });
     },
   },

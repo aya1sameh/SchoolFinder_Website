@@ -47,7 +47,7 @@
               color="#009688"
               dark
             >
-            This Email is already taken try to login with
+            This Email/Username is already taken try to login with
             </v-alert>
           </v-col>
         </v-row>
