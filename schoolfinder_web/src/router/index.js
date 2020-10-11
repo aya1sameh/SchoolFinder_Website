@@ -5,6 +5,7 @@ import SignUp from '../views/SignUp.vue';
 import Login from '../views/Login.vue';
 import RecoverPassword from '../views/RecoverPassword.vue';
 import ResetPassword from '../views/ResetPassword.vue';
+import UserProfile from '../views/UserProfile.vue';
 
 Vue.use(VueRouter);
 
@@ -33,6 +34,11 @@ const routes = [
     path: '/reset_password',
     name: 'ResetPassword',
     component: ResetPassword,
+  },
+  {
+    path: '/user_profile',
+    name: 'UserProfile',
+    component: UserProfile,
   },
   {
     path: '/about',

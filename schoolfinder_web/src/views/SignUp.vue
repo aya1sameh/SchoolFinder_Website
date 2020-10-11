@@ -39,7 +39,18 @@
             ></v-file-input>
           </v-col>
         </v-row>
-<div>{{UserImage}}</div>
+        <v-row justify="center" no-gutters>
+          <v-col cols="12" sm="6" md="5">
+             <v-alert
+              v-show="this.ExistingUseralert"
+              border="left"
+              color="#009688"
+              dark
+            >
+            This Email/Username is already taken try to login with
+            </v-alert>
+          </v-col>
+        </v-row>
         <v-row justify="center" no-gutters>
           <v-col cols="12" sm="6" md="5">
             <v-text-field
@@ -105,7 +116,7 @@
               label="Phone Number"
               prepend-inner-icon="mdi-phone"
               color="#009688"
-              :rules="[rules.number]"
+              :rules="[rules.number, rules.required]"
               outlined
             ></v-text-field>
           </v-col>
@@ -115,11 +126,12 @@
           <v-col cols="12" sm="6" md="5">
             <v-text-field
               v-model="Location"
-              label="Location"
+              label="Address"
               prepend-inner-icon="mdi-map-marker"
               color="#009688"
               outlined
               hint="Street-City"
+              :rules="[rules.required]"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -147,22 +159,6 @@
             </v-radio-group>
           </v-col>
         </v-row>
-
-        <v-row justify="center" no-gutters>
-          <v-col cols="12" sm="6" md="5">
-            <v-select
-              v-model="SchoolSelected"
-              v-show="Role == 'school_admin'"
-              :items="[items]"
-              label="Select A School"
-              color="#009688"
-              dense
-              outlined
-            >
-            </v-select>
-          </v-col>
-        </v-row>
-
         </v-form>
         <br />
         <v-row justify="center" no-gutters>
@@ -207,6 +203,7 @@ export default {
     return {
       show1: false,
       show2: false,
+      ExistingUseralert: false,
       Role: '',
       UserImage: new Image(),
       Name: '',
@@ -217,9 +214,6 @@ export default {
       Location: '',
       SchoolSelected: '',
       url: SignupAvatar,
-      items: [{
-        schools: () => this.getschoolsNames(),
-      }],
       rules: {
         required: (value) => !!value || 'Required.',
         email: (value) => {
@@ -257,12 +251,17 @@ export default {
             password_confirmation: this.Confirmpassword,
             email: this.Email,
             role: this.Role,
-            avatar: this.UserImage,
+            // avatar: this.UserImage,
             phone_no: this.PhoneNumber,
             address: this.Location,
           },
-        });
-        // this.$router.push('/login');
+        })
+          .then(() => {
+            // this.$router.push('/login');
+          })
+          .catch(() => {
+            this.ExistingUseralert = true;
+          });
       }
     },
     previewImage() {
