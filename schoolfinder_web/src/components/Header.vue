@@ -233,13 +233,10 @@
         <v-card-title>Select Maximum fees</v-card-title>
         <v-divider></v-divider>
         <v-card-text style="height: 100px;">
-          <v-row>
           <v-text-field
             v-model="enteredMaxFees"
             label="EPG"
-            :rules="[rules.required, rules.IsaNumber(enteredMaxFees)]"
           ></v-text-field>
-          </v-row>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
