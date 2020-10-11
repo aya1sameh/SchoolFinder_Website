@@ -141,6 +141,9 @@ export default {
       return true;
     },
   },
+  created() {
+    if (!this.$route.query.email) this.$router.push('/login');
+  },
 };
 </script>
 <style scoped>
