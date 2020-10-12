@@ -1,5 +1,7 @@
 <template>
-  <router-view></router-view>
+  <v-app>
+    <router-view></router-view>
+  </v-app>
 </template>
 
 <script>
@@ -12,3 +14,17 @@ export default {
   }),
 };
 </script>
+
+<style>
+  #content {
+  background-color: #008080;
+}
+#container {
+  background-color: #eeeeee;
+  border-radius: 50px;
+  width: 80%;
+}
+#SchoolFinder {
+  color: #009688;
+}
+</style>
