@@ -1,9 +1,9 @@
 <template>
-  <v-content id="content">
+  <v-content fluid id="content">
     <Header></Header>
-    <v-container id="container">
+    <v-container fluid  id="container">
       <!--School Name-->
-      <div id="schoolname">
+      <div id="schoolname" >
         <h1 class="display-3 color=blue text-color=white">{{ school.name }}</h1>
       </div>
 
@@ -110,7 +110,7 @@
 import Header from '../components/Header.vue';
 
 export default {
-  components:{Header},
+  components: { Header },
   data() {
     return {
       school: {

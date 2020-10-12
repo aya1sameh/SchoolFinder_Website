@@ -2,7 +2,7 @@
   <nav>
     <v-toolbar
       dark
-      color="#004D40"
+      color="#008080"
     >
       <v-toolbar-title>School Finder</v-toolbar-title>
       <v-spacer></v-spacer>

@@ -18,12 +18,13 @@ export default {
 <style>
   #content {
   color: #009688;
-  background-color: #008080;
+  background-color:#546E7A;
 }
 #container {
-  background-color: #eeeeee;
+  margin-top: 1%;
+  background-color: #E0E0E0;
   border-radius: 40px;
-  width: 90%;
+  width: 95%;
 }
 #SchoolFinder {
   color: #009688;
