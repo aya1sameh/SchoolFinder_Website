@@ -272,8 +272,6 @@
       </v-card>
     </v-dialog>
   </v-row>
-  <span>{{searchResults}}</span>
-  <span>{{searched}}</span>
   </nav>
 </template>
 
@@ -299,6 +297,7 @@ export default {
     enteredMaxFees: '',
     searched: '',
     searchResults: '',
+    filteredResults: '',
   }),
   components: {
     UserDrawer,
@@ -316,6 +315,22 @@ export default {
         axios.post('http://127.0.0.1:8000/api/schools/search', { name: this.searched }, { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
           .then((response) => {
             this.searchResults = response;
+          });
+      }
+    },
+    Filtering() {
+      if (!(this.enteredMaxFees === '' && this.selectedLanguage === '' && this.enteredLocation === '' && this.selectedCertificate === '' && this.selectedStage === '')) {
+        axios.post('http://127.0.0.1:8000/api/schools/filter',
+          {
+            MaxFees: this.enteredMaxFees,
+            Language: this.selectedLanguage,
+            Address: this.enteredLocation,
+            Certificate: this.selectedCertificate,
+            Stage: this.selectedStage,
+          },
+          { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
+          .then((response) => {
+            this.filteredResults = response;
           });
       }
     },

@@ -6,6 +6,7 @@ import Login from '../views/Login.vue';
 import RecoverPassword from '../views/RecoverPassword.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import UserProfile from '../views/UserProfile.vue';
+import test from '../views/test.vue';
 import FavouriteSchools from '../views/FavouriteSchools.vue';
 
 Vue.use(VueRouter);
