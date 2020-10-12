@@ -1,5 +1,6 @@
 <template>
   <v-content id="content">
+    <Header></Header>
     <v-container id="container">
       <!--School Name-->
       <div id="schoolname">
@@ -106,7 +107,10 @@
 </template>
 
 <script>
+import Header from '../components/Header.vue';
+
 export default {
+  components:{Header},
   data() {
     return {
       school: {
