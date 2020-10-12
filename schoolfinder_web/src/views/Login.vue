@@ -1,6 +1,5 @@
 <template>
-  <v-app>
-    <v-content id="content">
+    <v-main id="content">
       <v-container id="container" class="mt-10 mb-10">
         <v-row justify="center" class="mb-5">
           <v-col
@@ -136,8 +135,7 @@
         </v-row>
 
       </v-container>
-    </v-content>
-  </v-app>
+    </v-main>
 </template>
 
 <script>
@@ -174,22 +172,23 @@ export default {
             this.WrongNameOrPassAlert = false;
             this.$store.state.usertoken = response.data.access_token;
             localStorage.setItem('usertoken', response.data.access_token);
-            this.$router.push('/'); // to be updated after testing to '/'
-            this.$store.mutations.login();
+            this.$router.push('/');
           })
           .catch((error) => {
-            if (error.response.status === 401) {
-              this.verifyalert = true;
-              this.NotRegisteredalert = false;
-              this.WrongNameOrPassAlert = false;
-            } else if (error.response.status === 402) {
-              this.verifyalert = false;
-              this.NotRegisteredalert = false;
-              this.WrongNameOrPassAlert = true;
-            } else {
-              this.verifyalert = false;
-              this.NotRegisteredalert = true;
-              this.WrongNameOrPassAlert = false;
+            if (error.response) {
+              if (error.response.status === 401) {
+                this.verifyalert = true;
+                this.NotRegisteredalert = false;
+                this.WrongNameOrPassAlert = false;
+              } else if (error.response.status === 402) {
+                this.verifyalert = false;
+                this.NotRegisteredalert = false;
+                this.WrongNameOrPassAlert = true;
+              } else {
+                this.verifyalert = false;
+                this.NotRegisteredalert = true;
+                this.WrongNameOrPassAlert = false;
+              }
             }
           });
       }
@@ -200,6 +199,9 @@ export default {
       }
       return this.rules.Namelength(value);
     },
+  },
+  created() {
+    if (localStorage.getItem('usertoken') !== null) this.$router.push('/');
   },
 };
 </script>

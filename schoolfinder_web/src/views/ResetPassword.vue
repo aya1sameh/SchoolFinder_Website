@@ -1,6 +1,5 @@
 <template>
-  <v-app>
-    <v-content id="content">
+    <v-main id="content">
       <v-container id="container" class="mt-10 mb-10">
         <v-row justify="center" class="mb-5">
           <v-col
@@ -97,8 +96,7 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-content>
-  </v-app>
+    </v-main>
 </template>
 
 <script>
@@ -142,6 +140,9 @@ export default {
       if (Confirmpassword !== password) return false;
       return true;
     },
+  },
+  created() {
+    if (!this.$route.query.email) this.$router.push('/login');
   },
 };
 </script>
