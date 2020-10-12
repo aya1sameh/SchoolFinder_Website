@@ -6,10 +6,23 @@
     >
       <v-toolbar-title>School Finder</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
-      <v-spacer></v-spacer>
+      <v-row >
+      <v-col
+          cols="12"
+          sm="12">
+          <br />
+      <v-text-field
+        justify="space-around"
+        v-model="searched"
+        solo
+        label="Search"
+        light
+      >
+      </v-text-field>
+      </v-col>
+      </v-row>
+      <v-btn icon @click="Search()">
+      <v-icon>mdi-magnify</v-icon></v-btn>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
       <v-row
@@ -19,7 +32,7 @@
     <v-btn text>
       Home
     </v-btn>
-    <v-btn text>
+    <v-btn text @click="GoToAbout()">
       About
     </v-btn>
     <v-btn text>
@@ -50,13 +63,19 @@
     <v-btn @click="showCertificate = !showCertificate">
       Certificate
     </v-btn>
-    <v-btn @click="showAddress = !showAddress">
+    <v-btn @click="showLocation = !showLocation">
       Address
     </v-btn>
     <v-btn @click="showStage = !showStage">
       Stage
     </v-btn>
     </v-btn-toggle>
+    <v-btn @click="Filtering()"
+      class="text-center"
+      color="#004D40"
+      rounded
+      dark
+      v-if="filter">Go</v-btn>
     </v-flex>
     <v-navigation-drawer v-model="drawer" app class="white" right>
       <UserDrawer @HideUserDrawer="drawer = !drawer"></UserDrawer>
@@ -233,10 +252,12 @@
         <v-card-title>Select Maximum fees</v-card-title>
         <v-divider></v-divider>
         <v-card-text style="height: 100px;">
-          <v-text-field
-            v-model="enteredMaxFees"
-            label="EPG"
-          ></v-text-field>
+          <vue-numeric-input
+          v-model="enteredMaxFees"
+          :min="100"
+          :max="10000000"
+          :step="100">
+          </vue-numeric-input>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
@@ -251,10 +272,14 @@
       </v-card>
     </v-dialog>
   </v-row>
+  <span>{{searchResults}}</span>
+  <span>{{searched}}</span>
   </nav>
 </template>
 
 <script>
+import VueNumericInput from 'vue-numeric-input';
+import axios from 'axios';
 import UserDrawer from './UserDrawer.vue';
 
 export default {
@@ -272,19 +297,27 @@ export default {
     enteredLocation: '',
     showMaxFees: false,
     enteredMaxFees: '',
+    searched: '',
+    searchResults: '',
   }),
   components: {
     UserDrawer,
+    VueNumericInput,
   },
   rules: {
-    number: (value) => this.IsaNumber(value) || 'Not a Number',
+    required: (value) => !!value || 'Required.',
   },
   methods: {
-    IsaNumber(charCode) {
-      if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
-        return false;
+    GoToAbout() {
+      this.$router.push('about');
+    },
+    Search() {
+      if (!(this.searched === '')) {
+        axios.post('http://127.0.0.1:8000/api/schools/search', { name: this.searched }, { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
+          .then((response) => {
+            this.searchResults = response;
+          });
       }
-      return true;
     },
   },
 };

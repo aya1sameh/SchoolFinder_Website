@@ -6,14 +6,20 @@ import Login from '../views/Login.vue';
 import RecoverPassword from '../views/RecoverPassword.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import UserProfile from '../views/UserProfile.vue';
+import test from '../views/test.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: test,
   },
   {
     path: '/signup',
