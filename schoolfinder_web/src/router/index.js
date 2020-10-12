@@ -7,14 +7,20 @@ import RecoverPassword from '../views/RecoverPassword.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import UserProfile from '../views/UserProfile.vue';
 import SchoolProfile from '../views/SchoolProfile.vue';
+import FavouriteSchools from '../views/FavouriteSchools.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home,
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: test,
   },
   {
     path: '/signup',
@@ -40,6 +46,11 @@ const routes = [
     path: '/user_profile',
     name: 'UserProfile',
     component: UserProfile,
+  },
+  {
+    path: '/favourite_schools',
+    name: 'FavouriteSchools',
+    component: FavouriteSchools,
   },
   {
     path: '/about',

@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'UserDrawer',
   data: () => ({
@@ -63,6 +65,20 @@ export default {
   methods: {
     HideUserDrawer() {
       this.$emit('HideUserDrawer');
+    },
+    logout() {
+      axios.get('http://127.0.0.1:8000/api/logout', { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', Authorization: `${'Bearer'} ${localStorage.getItem('usertoken')}` } });
+      this.$store.state.usertoken = null;
+      localStorage.clear();
+      this.$router.push('/login');
+    },
+    CheckAction(value) {
+      if (value === 2) {
+        this.logout();
+      }
+      if (value === 0) {
+        this.$router.push('/user_profile');
+      }
     },
   },
 };

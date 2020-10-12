@@ -15,8 +15,10 @@
     "eslint-formatter-pretty": "^4.0.0",
     "material-design-icons-iconfont": "^6.1.0",
     "vue": "^2.6.11",
+    "vue-numeric-input": "^1.0.6",
     "vue-router": "^3.2.0",
     "vuetify": "^2.2.11",
+    "vuetify-numeric": "^0.1.4",
     "vuex": "^3.4.0"
   },
   "devDependencies": {

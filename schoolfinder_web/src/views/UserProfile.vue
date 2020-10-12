@@ -1,6 +1,5 @@
 <template>
-  <v-app>
-    <v-content id="content">
+    <v-main id="content">
       <v-container id="container" class="mt-10 mb-10">
         <v-row justify="center" class="mb-5">
           <v-col
@@ -115,8 +114,7 @@
         </v-row>
         <br />
       </v-container>
-    </v-content>
-  </v-app>
+    </v-main>
 </template>
 
 <script>
@@ -144,15 +142,14 @@ export default {
   methods: {
     Validate() {
       if (this.$refs.form.validate()) {
-        // const formData = new FormData();
-        // formData.append('image', this.file, this.file.name);
-        // console.log(formData);
-        const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', 'Content-Type': 'multipart/form-data', Authorization: `${'Bearer'} ${this.$store.state.usertoken}` } };
+        // const fd = new FormData(this.$refs.form);
+        // fd.append('image', this.file);
+        const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', 'Content-Type': 'multipart/form-data', Authorization: `${'Bearer'} ${localStorage.getItem('usertoken')}` } };
         axios.post('http://127.0.0.1:8000/api/user', {
           name: this.Name,
           phone_no: this.PhoneNumber,
           address: this.Location,
-          // avatar: this.file,
+          // avatar: fd,
           // formData,
         }, option)
           .then((response) => {
@@ -179,6 +176,7 @@ export default {
       return false;
     },
     getUserInfo() {
+      if (localStorage.getItem('usertoken') === null) this.$router.push('/login');
       const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', Authorization: `${'Bearer'} ${localStorage.getItem('usertoken')}` } };
       axios.get('http://127.0.0.1:8000/api/user/profile', option)
         .then((response) => {
