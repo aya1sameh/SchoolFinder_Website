@@ -3,13 +3,13 @@
     <v-toolbar
       dark
       color="#004D40"
+      d-inline
     >
       <v-toolbar-title>School Finder</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-row >
       <v-col
-          cols="12"
-          sm="12">
+       d-inline>
           <br />
       <v-text-field
         justify="space-around"
@@ -28,6 +28,7 @@
       <v-row
       align="center"
       justify="space-around"
+      d-block
       >
     <v-btn text>
       Home
@@ -77,7 +78,7 @@
       dark
       v-if="filter">Go</v-btn>
     </v-flex>
-    <v-navigation-drawer v-model="drawer" app class="white" right>
+    <v-navigation-drawer v-model="drawer" app class="white" right v-if=drawer>
       <UserDrawer @HideUserDrawer="drawer = !drawer"></UserDrawer>
     </v-navigation-drawer>
     <v-row justify="center">

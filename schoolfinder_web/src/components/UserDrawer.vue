@@ -13,9 +13,9 @@
         <v-list-item link>
           <v-list-item-content>
             <v-list-item-title class="title">
-              John Leider
+              {{name}}
             </v-list-item-title>
-            <v-list-item-subtitle>john@vuetifyjs.com</v-list-item-subtitle>
+            <v-list-item-subtitle>{{Email}}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -31,6 +31,7 @@
           <v-list-item
             v-for="(item, i) in items"
             :key="i"
+            @click="CheckAction(i)"
           >
             <v-list-item-icon>
               <v-icon v-text="item.icon"></v-icon>
@@ -42,6 +43,7 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
+      <span>{{selected}}</span>
     </v-card>
 </template>
 
@@ -58,6 +60,8 @@ export default {
       { text: 'Favorites', icon: 'mdi-star' },
       { text: 'Logout', icon: 'mdi-arrow-right-bold' },
     ],
+    name: 'John Leider',
+    Email: 'john@vuetifyjs.com',
   }),
   props: {
     drawer: Boolean,
@@ -72,13 +76,9 @@ export default {
       localStorage.clear();
       this.$router.push('/login');
     },
-    CheckAction(value) {
-      if (value === 2) {
-        this.logout();
-      }
-      if (value === 0) {
-        this.$router.push('/user_profile');
-      }
+    CheckAction(i) {
+      if (i === 0) this.$router.push('/user_profile');
+      if (i === 2) this.logout();
     },
   },
 };
