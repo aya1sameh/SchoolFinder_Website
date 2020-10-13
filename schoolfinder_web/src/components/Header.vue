@@ -2,14 +2,9 @@
   <nav>
     <v-toolbar
       dark
-<<<<<<< HEAD
-      color="#004D40"
-      d-inline
-=======
       color="#008080"
->>>>>>> 34ecf96fbd81bc6f5a87b5b52bd507e1edf46400
     >
-      <v-toolbar-title>School Finder</v-toolbar-title>
+      <v-toolbar-title class="d-none d-md-block">School Finder</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-row >
       <v-col
@@ -29,34 +24,21 @@
       <v-icon>mdi-magnify</v-icon></v-btn>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
-      <v-row
-      align="center"
-      justify="space-around"
-      d-block
-      >
-    <v-btn text>
-      Home
-    </v-btn>
-    <v-btn text @click="GoToAbout()">
-      About
-    </v-btn>
-    <v-btn text>
-      Suggestions
-    </v-btn>
-    <v-btn text @click="filter = !filter">
-      Filter
-    </v-btn>
-    <v-btn text>
-      Compare
-    </v-btn>
-  </v-row>
+    <v-row dense >
+      <v-col><v-btn class="d-none d-lg-block" text>Home</v-btn></v-col>
+      <v-col><v-btn class="d-none d-lg-block" text @click="GoToAbout()">About</v-btn></v-col>
+      <v-col><v-btn class="d-none d-lg-block" text>Suggestions</v-btn></v-col>
+      <v-col><v-btn class="d-none d-lg-block" text @click="filter = !filter">Filter</v-btn></v-col>
+      <v-col><v-btn class="d-none d-lg-block" text>Compare</v-btn></v-col>
+    </v-row>
   <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
     </v-toolbar>
-    <v-flex xs12 offset-xs4>
+    <v-flex align-self-center>
     <v-btn-toggle
       class="ma-2 text-center"
       color="#004D40"
       group
+      dense
       v-if="filter"
     >
     <v-btn @click="showMaxFees = !showMaxFees">
