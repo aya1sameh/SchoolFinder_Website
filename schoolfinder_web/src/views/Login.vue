@@ -122,7 +122,7 @@
         <v-row justify="center" no-gutters>
           <v-col cols="24" sm="18" md="15">
             <v-btn
-              to='/'
+              to='/home'
               outlined
               rounded
               color="#009688"
@@ -172,7 +172,7 @@ export default {
             this.WrongNameOrPassAlert = false;
             this.$store.state.usertoken = response.data.access_token;
             localStorage.setItem('usertoken', response.data.access_token);
-            this.$router.push('/');
+            this.$router.push('/home');
           })
           .catch((error) => {
             if (error.response) {
@@ -201,7 +201,7 @@ export default {
     },
   },
   created() {
-    if (localStorage.getItem('usertoken') !== null) this.$router.push('/');
+    if (localStorage.getItem('usertoken') !== null) this.$router.push('/home');
   },
 };
 </script>

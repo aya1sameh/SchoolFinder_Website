@@ -265,17 +265,8 @@ export default {
     previewImage() {
       this.url = URL.createObjectURL(this.UserImage);
     },
-    getschoolsNames() {
-      const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } };
-      axios.get('http://127.0.0.1:8000/api/schools', option)
-        .then((response) => {
-          this.items = response.data;
-        });
-    },
   },
-  created() {
-    this.getschoolsNames();
-  },
+
 };
 </script>
 
