@@ -81,7 +81,7 @@ export default {
       this.url = URL.createObjectURL(this.file);
     },
     getUserFavSchools() {
-      if (localStorage.getItem('usertoken') === null) this.$router.push('/login');
+      if (localStorage.getItem('usertoken') === null) this.$router.push('/');
       const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', Authorization: `${'Bearer'} ${localStorage.getItem('usertoken')}` } };
       axios.get('http://127.0.0.1:8000/api/user/favorites', option)
         .then((response) => {
