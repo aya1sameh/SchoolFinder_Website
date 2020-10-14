@@ -25,9 +25,11 @@
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
     <v-row dense >
-      <v-col><v-btn class="d-none d-lg-block" text>Home</v-btn></v-col>
+      <v-col><v-btn class="d-none d-lg-block" text @click="GoToHome()">
+      Home</v-btn></v-col>
       <v-col><v-btn class="d-none d-lg-block" text @click="GoToAbout()">About</v-btn></v-col>
-      <v-col><v-btn class="d-none d-lg-block" text>Suggestions</v-btn></v-col>
+      <v-col><v-btn class="d-none d-lg-block" text @click="GoToSuggest()">
+        Suggestions</v-btn></v-col>
       <v-col><v-btn class="d-none d-lg-block" text @click="filter = !filter">Filter</v-btn></v-col>
       <v-col><v-btn class="d-none d-lg-block" text>Compare</v-btn></v-col>
     </v-row>
@@ -296,6 +298,12 @@ export default {
   methods: {
     GoToAbout() {
       this.$router.push('about');
+    },
+    GoToHome() {
+      this.$router.push('/home');
+    },
+    GoToSuggest() {
+      this.$router.push('/suggest');
     },
     Search() {
       if (!(this.searched === '')) {

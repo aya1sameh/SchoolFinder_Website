@@ -8,6 +8,7 @@ import ResetPassword from '../views/ResetPassword.vue';
 import UserProfile from '../views/UserProfile.vue';
 import SchoolProfile from '../views/SchoolProfile.vue';
 import FavouriteSchools from '../views/FavouriteSchools.vue';
+import Suggestion from '../views/Suggestion.vue';
 
 Vue.use(VueRouter);
 
@@ -59,6 +60,11 @@ const routes = [
     path: '/school',
     name: 'School Profile',
     component: SchoolProfile,
+  },
+  {
+    path: '/suggest',
+    name: 'Suggestion',
+    component: Suggestion,
   },
 ];
 

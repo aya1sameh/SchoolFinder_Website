@@ -1,9 +1,41 @@
 <template>
-    <v-card>
-      <v-list>
+    <v-card flat>
+      <v-card class="text-center mx-auto outlined" flat v-if="! UserOrGuest()">
+        <v-icon right @click='HideUserDrawer()'>mdi-arrow-right</v-icon>
+        <v-card-text >
+          <span class="teal--text text-h5">
+            Enjoy more features through your account!
+          </span></v-card-text>
+          <br/>
+          <div class="text-caption">
+            Join now
+          </div>
+          <v-btn
+            rounded
+            color="#009688"
+            dark
+            @click='GoToSignup()'
+          >
+            Sign Up
+          </v-btn>
+          <br/>
+          <br/>
+          <div class="text-caption">
+            If you already have an account
+          </div>
+          <v-btn
+            rounded
+            color="#009688"
+            dark
+            @click='GoToLogin()'
+          >
+            Log In
+          </v-btn>
+        </v-card>
+      <v-list v-if="UserOrGuest()">
         <v-list-item>
           <v-list-item-avatar size="100" >
-            <v-img src="https://cdn.vuetifyjs.com/images/john.png"></v-img>
+            <v-img :src="url"></v-img>
           </v-list-item-avatar>
           <v-list-item link>
             <v-spacer></v-spacer>
@@ -13,7 +45,7 @@
         <v-list-item link>
           <v-list-item-content>
             <v-list-item-title class="title">
-              {{name}}
+              {{Name}}
             </v-list-item-title>
             <v-list-item-subtitle>{{Email}}</v-list-item-subtitle>
           </v-list-item-content>
@@ -23,6 +55,7 @@
       <v-list
         nav
         dense
+        v-if="UserOrGuest()"
       >
         <v-list-item-group
           v-model="item"
@@ -49,6 +82,7 @@
 
 <script>
 import axios from 'axios';
+import SignupAvatar from '../assets/SignupAvatar.png';
 
 export default {
   name: 'UserDrawer',
@@ -60,8 +94,9 @@ export default {
       { text: 'Favorites', icon: 'mdi-star' },
       { text: 'Logout', icon: 'mdi-arrow-right-bold' },
     ],
-    name: 'John Leider',
-    Email: 'john@vuetifyjs.com',
+    Name: '',
+    Email: '',
+    url: SignupAvatar,
   }),
   props: {
     drawer: Boolean,
@@ -78,7 +113,29 @@ export default {
     },
     CheckAction(i) {
       if (i === 0) this.$router.push('/user_profile');
+      if (i === 1) this.$router.push('/favourite_schools');
       if (i === 2) this.logout();
+    },
+    GoToLogin() {
+      this.$router.push('/login');
+    },
+    GoToSignup() {
+      this.$router.push('/signup');
+    },
+    getUserInfo() {
+      const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', Authorization: `${'Bearer'} ${localStorage.getItem('usertoken')}` } };
+      axios.get('http://127.0.0.1:8000/api/user/profile', option)
+        .then((response) => {
+          this.Name = response.data.name;
+          this.Email = response.data.email;
+        });
+    },
+    UserOrGuest() {
+      const userToken = localStorage.getItem('usertoken');
+      if (!(userToken === null)) {
+        this.getUserInfo();
+      }
+      return userToken;
     },
   },
 };
