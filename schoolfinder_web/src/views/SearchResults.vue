@@ -6,26 +6,30 @@
             Looking for a school...
           </span>
           <span class="teal--text text-h5 text-center" v-if="! flag">
-            Search results:
+            Search results
           </span>
           <SchoolCard
           v-for="i in Schools.length"
           :key="i"
           :school="Schools[i-1]"
+          :AddToFav="true"
           />
       </v-container>
+      <Footer v-if="! flag"/>
     </v-main>
 </template>
 
 <script>
 import axios from 'axios';
 import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 import SchoolCard from '@/components/SchoolCard.vue';
 
 export default {
   name: 'SearchResults',
   components: {
     Header,
+    Footer,
     SchoolCard,
   },
   data() {
@@ -42,8 +46,8 @@ export default {
       axios.post('http://127.0.0.1:8000/api/schools/search', { name: this.searched }, { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
         .then((response) => {
           this.Schools = response.data;
+          this.flag = false;
         });
-      this.flag = false;
     },
   },
 };
