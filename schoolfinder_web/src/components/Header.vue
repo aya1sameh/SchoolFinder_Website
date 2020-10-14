@@ -20,7 +20,7 @@
       </v-text-field>
       </v-col>
       </v-row>
-      <v-btn icon @click="Search()">
+      <v-btn icon v-on:click="emitToParent">
       <v-icon>mdi-magnify</v-icon></v-btn>
       <v-spacer></v-spacer>
       <v-spacer></v-spacer>
@@ -304,6 +304,10 @@ export default {
     },
     GoToSuggest() {
       this.$router.push('/suggest');
+    },
+    emitToParent() {
+      this.$emit('childToParent', this.searched);
+      this.$router.push('/search_results');
     },
     Search() {
       if (!(this.searched === '')) {
