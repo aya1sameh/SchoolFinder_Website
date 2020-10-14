@@ -8,7 +8,6 @@
           :school="Schools[i-1]"
           />
       </v-container>
-      <span>{{searched}}</span>
     </v-main>
 </template>
 

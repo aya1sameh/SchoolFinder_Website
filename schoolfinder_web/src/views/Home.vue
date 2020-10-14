@@ -7,7 +7,8 @@
       :key="i"
       :src=base_url+item.ad_image_url
     ></v-carousel-item>
-  </v-carousel>
+    </v-carousel>
+    <Footer/>
   </v-app>
 </template>
 
@@ -15,11 +16,13 @@
 // @ is an alias to /src
 import axios from 'axios';
 import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 
 export default {
   name: 'Home',
   components: {
     Header,
+    Footer,
   },
   data: () => ({
     base_url: 'http://127.0.0.1:8000/',
