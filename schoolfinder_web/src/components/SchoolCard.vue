@@ -13,12 +13,12 @@
               id="avatar"
               class="preview"
               rounded
-              :src="school.external_urls ? school.external_urls[0] : TempImage"
+              :src="school.gallery ? school.gallery[0] : TempImage"
               color="#009688"
             ></v-img>
           </v-col>
           <v-col>
-            <h2>{{ school.name }}</h2>
+            <v-btn text :to="`/school/${school.id}`">{{ school.name }}</v-btn>
           </v-col>
         </v-row>
         <v-list-item-title class="headline mb-2">
