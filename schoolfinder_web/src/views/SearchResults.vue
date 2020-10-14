@@ -2,6 +2,12 @@
     <v-main id="content">
         <Header v-on:childToParent="onChildClick"/>
       <v-container id="container" class="mt-10 mb-10">
+          <span class="teal--text text-h5 text-center" v-if="flag">
+            Looking for a school...
+          </span>
+          <span class="teal--text text-h5 text-center" v-if="! flag">
+            Search results:
+          </span>
           <SchoolCard
           v-for="i in Schools.length"
           :key="i"
@@ -26,15 +32,18 @@ export default {
     return {
       Schools: {},
       searched: '',
+      flag: true,
     };
   },
   methods: {
     onChildClick(value) {
+      if (value === '') { return; }
       this.searched = value;
       axios.post('http://127.0.0.1:8000/api/schools/search', { name: this.searched }, { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' } })
         .then((response) => {
           this.Schools = response.data;
         });
+      this.flag = false;
     },
   },
 };

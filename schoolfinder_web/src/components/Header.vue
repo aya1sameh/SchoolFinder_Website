@@ -11,13 +11,13 @@
        d-inline>
           <br />
       <v-text-field
+        @click="GoToSearchResults()"
         justify="space-around"
         v-model="searched"
         solo
         label="Search"
         light
-      >
-      </v-text-field>
+      />
       </v-col>
       </v-row>
       <v-btn icon v-on:click="emitToParent">
@@ -304,6 +304,9 @@ export default {
     },
     GoToSuggest() {
       this.$router.push('/suggest');
+    },
+    GoToSearchResults() {
+      this.$router.push('/search_results');
     },
     emitToParent() {
       this.$emit('childToParent', this.searched);
