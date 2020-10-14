@@ -13,7 +13,7 @@
               id="avatar"
               class="preview"
               rounded
-              :src="school.external_urls ? school.external_urls[0] : TempImage"
+              :src="school.gallery ? school.gallery[0] : TempImage"
               color="#009688"
             ></v-img>
           </v-col>
