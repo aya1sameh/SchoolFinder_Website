@@ -84,7 +84,7 @@
         <v-row justify="center" no-gutters>
           <v-col cols="24" sm="18" md="15">
             <v-btn
-              to="/login"
+              to="/"
               rounded
               outlined
               color="#009688"
@@ -142,7 +142,7 @@ export default {
     },
   },
   created() {
-    if (!this.$route.query.email) this.$router.push('/login');
+    if (!this.$route.query.email) this.$router.push('/');
   },
 };
 </script>

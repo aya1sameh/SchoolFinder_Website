@@ -77,7 +77,7 @@
         <v-row justify="center" no-gutters>
           <v-col cols="24" sm="18" md="15">
             <v-btn
-              to="/login"
+              to="/"
               outlined
               rounded
               color="#009688"
