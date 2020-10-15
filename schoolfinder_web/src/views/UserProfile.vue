@@ -22,6 +22,16 @@
               max-width="200"
             >
             </v-img>
+            <br />
+            <v-btn
+            @click="RemoveAvatar"
+            dark
+            rounded
+            color="red"
+            small
+            style="width: 200px">
+            Remove My Profile Picture
+            </v-btn>
           </v-col>
           <v-col cols="1" sm="1" md="1">
             <br />
@@ -113,6 +123,21 @@
           </v-col>
         </v-row>
         <br />
+        <v-row justify="center" no-gutters>
+          <v-col cols="24" sm="18" md="15">
+            <v-btn
+              to='/home'
+              rounded
+              outlined
+              color="#009688"
+              large
+              style="width: 200px"
+            >
+              Back
+            </v-btn>
+          </v-col>
+        </v-row>
+        <br />
       </v-container>
     </v-main>
 </template>
@@ -165,6 +190,10 @@ export default {
     },
     previewImage() {
       this.url = URL.createObjectURL(this.file);
+    },
+    RemoveAvatar() {
+      this.avatarurl = SignupAvatar;
+      this.file = SignupAvatar;
     },
     IsaNumber(value) {
       const phoneno = /^\d{11}$/;
