@@ -17,7 +17,7 @@
               id="avatar"
               class='preview'
               rounded
-              :src="url"
+              :src="useravatar"
               max-height="200"
               max-width="200"
             >
@@ -132,6 +132,7 @@ export default {
       Email: '',
       PhoneNumber: '',
       Location: '',
+      avatarurl: null,
       rules: {
         required: (value) => !!value || 'Required.',
         Namelength: (value) => (value.length >= 3 && value.length <= 64) || 'Min 3 characters and Max 64 characters',
@@ -142,22 +143,19 @@ export default {
   methods: {
     Validate() {
       if (this.$refs.form.validate()) {
-        // const fd = new FormData(this.$refs.form);
-        // fd.append('image', this.file);
+        const fd = new FormData();
+        fd.append('avatar', this.file);
+        fd.append('address', this.Location);
+        fd.append('name', this.Name);
+        fd.append('phone_no', this.PhoneNumber);
         const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', 'Content-Type': 'multipart/form-data', Authorization: `${'Bearer'} ${localStorage.getItem('usertoken')}` } };
-        axios.post('http://127.0.0.1:8000/api/user', {
-          name: this.Name,
-          phone_no: this.PhoneNumber,
-          address: this.Location,
-          // avatar: fd,
-          // formData,
-        }, option)
+        axios.post('http://127.0.0.1:8000/api/user', fd, option)
           .then((response) => {
             this.Name = response.data.name;
             this.Email = response.data.email;
             this.PhoneNumber = response.data.phone_no;
             this.Location = response.data.address;
-            // this.file = response.data.avatar;
+            this.avatarurl = response.data.avatar;
             this.ExistingUseralert = false;
           })
           .catch(() => {
@@ -184,12 +182,18 @@ export default {
           this.Email = response.data.email;
           this.PhoneNumber = response.data.phone_no;
           this.Location = response.data.address;
-          // this.file = response.data.avatar;
+          this.avatarurl = response.data.avatar;
         });
     },
   },
   created() {
     this.getUserInfo();
+  },
+  computed: {
+    useravatar() {
+      if (this.avatarurl) return `http://127.0.0.1:8000${this.avatarurl}`;
+      return this.url;
+    },
   },
 };
 </script>
