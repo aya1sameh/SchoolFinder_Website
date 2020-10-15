@@ -10,6 +10,7 @@ import SchoolProfile from '../views/SchoolProfile.vue';
 import FavouriteSchools from '../views/FavouriteSchools.vue';
 import Suggestion from '../views/Suggestion.vue';
 import SearchResults from '../views/SearchResults.vue';
+import FilterResults from '../views/FilterResults.vue';
 
 Vue.use(VueRouter);
 
@@ -71,6 +72,11 @@ const routes = [
     path: '/search_results',
     name: 'SearchResults',
     component: SearchResults,
+  },
+  {
+    path: '/filter_results',
+    name: 'FilterResults',
+    component: FilterResults,
   },
 ];
 
