@@ -239,23 +239,19 @@ export default {
     },
     Validate() {
       if (this.$refs.form.validate()) {
-        axios({
-          method: 'post',
-          url: 'http://127.0.0.1:8000/api/register',
-          headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq' },
-          data: {
-            name: this.Name,
-            password: this.password,
-            password_confirmation: this.Confirmpassword,
-            email: this.Email,
-            role: this.Role,
-            // avatar: this.UserImage,
-            phone_no: this.PhoneNumber,
-            address: this.Location,
-          },
-        })
+        const fd = new FormData();
+        fd.append('avatar', this.UserImage);
+        fd.append('address', this.Location);
+        fd.append('name', this.Name);
+        fd.append('phone_no', this.PhoneNumber);
+        fd.append('password', this.password);
+        fd.append('password_confirmation', this.Confirmpassword);
+        fd.append('email', this.Email);
+        fd.append('role', this.Role);
+        const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', 'Content-Type': 'multipart/form-data' } };
+        axios.post('http://127.0.0.1:8000/api/register', fd, option)
           .then(() => {
-            // this.$router.push('/');
+            this.$router.push('/');
           })
           .catch(() => {
             this.ExistingUseralert = true;

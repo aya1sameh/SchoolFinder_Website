@@ -13,7 +13,7 @@
               id="avatar"
               class="preview"
               rounded
-              :src="school.gallery ? school.gallery[0] : TempImage"
+              :src="schoolimage"
               color="#009688"
             ></v-img>
           </v-col>
@@ -59,10 +59,16 @@
             @click="$emit('addtofav',school.id)"
             dark
             rounded
-            color="green"
+            color="#546E7A"
             small
             style="width: 180px"
           >
+          <v-icon
+          dark
+          left
+        >
+          mdi-heart
+        </v-icon>
             Add to Favourites
           </v-btn>
           </v-col>
@@ -83,6 +89,12 @@ export default {
     return {
       TempImage: schoolfinderlogo,
     };
+  },
+  computed: {
+    schoolimage() {
+      if (this.school.gallery) return `http://127.0.0.1:8000/${this.school.gallery[0]}`;
+      return this.TempImage;
+    },
   },
 };
 </script>
