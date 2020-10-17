@@ -280,6 +280,7 @@
 
 <script>
 import axios from 'axios';
+import VueNumericInput from 'vue-numeric-input';
 import Header from '@/components/Header.vue';
 import Footer from '@/components/Footer.vue';
 import SchoolCard from '@/components/SchoolCard.vue';
@@ -290,6 +291,7 @@ export default {
     Header,
     SchoolCard,
     Footer,
+    VueNumericInput,
   },
   data() {
     return {

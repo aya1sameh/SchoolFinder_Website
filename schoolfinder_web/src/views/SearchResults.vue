@@ -13,6 +13,7 @@
           :key="i"
           :school="Schools[i-1]"
           :AddToFav="true"
+          @addtofav="AddToFavorites"
           />
       </v-container>
       <Footer v-if="! flag"/>
@@ -47,6 +48,14 @@ export default {
         .then((response) => {
           this.Schools = response.data;
           this.flag = false;
+        });
+    },
+    AddToFavorites(value) {
+      const option = { headers: { APP_KEY: 'c2Nob29sX2ZpbmRlcl9hcHBfa2V5ZmJkamhqeGNoa2N2anhqY2p2Ymh4amM6dmFzZGhoYXNkaGphZHNrZHNmYW1jbmhkc3VoZHVoY3Nq', Authorization: `${'Bearer'} ${localStorage.getItem('usertoken')}` } };
+      axios.post(`${'http://127.0.0.1:8000/api/user/favorites/'}${value}${'/add'}`, null, option)
+        .then(() => {
+          const index = this.Schools.findIndex((school) => school.id === value);
+          this.Schools.splice(index, 1);
         });
     },
   },
